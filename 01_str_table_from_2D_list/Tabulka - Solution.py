@@ -33,14 +33,21 @@ def list_2d_to_table(list_2d, header):
 		separator = "│"
 	top += "│\n"
 
+	top += "├%s┤\n" % "┼".join("─" * d for d in listdelek)
+
 	#print("top = [%s]" % top)
-	
+
+
 	for line in list_2d:
 		top += "│%-25s│\n" % "│".join(line)
+	#for column in range(len(list_2d)):
+	#	top += separator
+	#	top += ("%%-%ds" % listdelek[column]) % list_2d[column]
+
+	#top += "│\n"
 
 
-
-
+	top += "└%s┘\n" % "┴".join("─" * d for d in listdelek)	
 	return top
 
 
