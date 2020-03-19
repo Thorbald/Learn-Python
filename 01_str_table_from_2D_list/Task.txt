@@ -1,0 +1,23 @@
+Program a function that takes 2D list as an input and returns table-like string.
+
+
+def 2d_list_to_table(2d_list, header):
+
+example:
+	in:
+	header = ["O.", "Název cesty"]
+
+	2d_list = [
+
+		["8c", "Pučmeloun"],
+		["7a", "Modrá jablka"],
+		["6b", "Zelená Madla"],
+	]
+	out:
+	┌──┬────────────┐
+	│O.│Název cesty │
+	├──┼────────────┤
+	│8c│Pučmeloun   │
+	│7a│Modrá jablka│
+	│6b│Zelená Madla│
+	└──┴────────────┘
