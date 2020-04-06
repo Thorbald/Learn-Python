@@ -1,7 +1,6 @@
 def m_to_rectangle(measures, width, height):
     
     key = list(measures)
-
     screen = []
 
     for i in range(height):
@@ -19,9 +18,7 @@ def m_to_rectangle(measures, width, height):
             for cell in range(measures[obdelnik]["width"]):
                 row[measures[obdelnik]["left"] + cell] = str(i)
 
-
-    rectangle = []
-
+     rectangle = []
     for row in screen:
         row = "".join(row)
         rectangle.append(row)
