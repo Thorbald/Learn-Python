@@ -16,7 +16,6 @@ def list_2d_to_table(list_2d, header, char_set=None):
 	else:
 		s = char_set
 
-
 	listdelek = []
 	for column in range(len(header)):
 		maxdelka = len(header[column])
@@ -24,7 +23,6 @@ def list_2d_to_table(list_2d, header, char_set=None):
 			delka = len(line[column])
 			maxdelka = max(delka, maxdelka)
 		listdelek.append(maxdelka)
-
 
 	table = "┌%s┐\n" % s["┬"].join(s["─"] * d for d in listdelek)
 
@@ -50,8 +48,6 @@ def list_2d_to_table(list_2d, header, char_set=None):
 
 	table += "└%s┘\n" % "┴".join(s["─"] * d for d in listdelek)	
 	return table
-
-
 
 if __name__ == '__main__':
 
