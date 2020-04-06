@@ -1,4 +1,4 @@
-def list_2d_to_table(list_2d, header):
+def list_2d_to_table(list_2d, header, char_set=None):
 	""" 
 	┌──┬────────────┐
 	│O.│Název cesty │
@@ -7,7 +7,16 @@ def list_2d_to_table(list_2d, header):
 	│7a│Modrá jablka│
 	│6b│Zelená Madla│
 	└──┴────────────┘"""
-	
+	if char_set == None: 
+		s = {
+			"│": "│",
+			"┬": "┬",
+			"─": "─",
+		}
+	else:
+		s = char_set
+
+
 	listdelek = []
 	for column in range(len(header)):
 		maxdelka = len(header[column])
@@ -15,68 +24,60 @@ def list_2d_to_table(list_2d, header):
 			delka = len(line[column])
 			maxdelka = max(delka, maxdelka)
 		listdelek.append(maxdelka)
-	print(listdelek)
 
 
-	top = ("┌" + "─" * listdelek[0] + "┬" + "─" * listdelek[1] + "┐" + "\n" 
-	+ "│" + (("%%-%ds" % listdelek[0]) % header[0]) + "│" + header[1] + "│" + "\n")
+	table = "┌%s┐\n" % s["┬"].join(s["─"] * d for d in listdelek)
 
-	#for d in listdelek: 
-	#	top += "─" * d
-	top = "┌%s┐\n" % "┬".join("─" * d for d in listdelek)
-	
-	top += "│"
+	table += s["│"]
 	separator = ""
-	for column in range(len(header)):
-		top += separator
-		top += ("%%-%ds" % listdelek[column]) % header[column] 
+	for delka, cell in zip(listdelek, header):
+		table += separator
+		table += ("%%-%ds" % delka) % cell 
 		separator = "│"
-	top += "│\n"
+	table += "│\n"
 
-	top += "├%s┤\n" % "┼".join("─" * d for d in listdelek)
+	table += "├%s┤\n" % "┼".join(s["─"] * d for d in listdelek)
 
-	#print("top = [%s]" % top)
+	table += s["│"]
+	separator = ""
+	for row in list_2d:
+		for cell, delka in zip(row, listdelek):
+			table += separator	
+			table += ("%%-%ds" % delka) % cell
+			separator = "│"
+		table += s["│"]
+		table += "\n"
 
-
-	for line in list_2d:
-		top += "│%-25s│\n" % "│".join(line)
-	#for column in range(len(list_2d)):
-	#	top += separator
-	#	top += ("%%-%ds" % listdelek[column]) % list_2d[column]
-
-	#top += "│\n"
-
-
-	top += "└%s┘\n" % "┴".join("─" * d for d in listdelek)	
-	return top
+	table += "└%s┘\n" % "┴".join(s["─"] * d for d in listdelek)	
+	return table
 
 
 
+if __name__ == '__main__':
 
+	s = {
+			"│": " ",
+			"┬": " ",
+			"─": " ",
+		}
 
+	header1 = ["O.", "Název cesty"]
 
+	list_2d1 = [
+		["8c+", "Pučmeloun"],
+		["7a", "Modrá jablka"],
+		["6b", "Zelená Madla"],
+	]
 
+	header2 = ["Den", "Stupně"]
 
-header1 = ["O.", "Název cesty"]
+	list_2d2 = [
+		["8c", "Pučmeloun"],
+		["7a", "Modrá jablka"],
+		["6b", "Zelená Madla"],
+	]
 
-list_2d1 = [
-	["8c+", "Pučmeloun"],
-	["7a", "Modrá jablka"],
-	["6b", "Zelená Madla"],
-]
-
-header2 = ["Den", "Stupně"]
-
-list_2d2 = [
-	["8c", "Pučmeloun"],
-	["7a", "Modrá jablka"],
-	["6b", "Zelená Madla"],
-]
-
-
-
-
-print("test1")
-print(list_2d_to_table(list_2d1, header1))
-print("test2")
-print(list_2d_to_table(list_2d2, header2))
+	print("test1")
+	print(list_2d_to_table(list_2d1, header1, s))
+	print("test2")
+	print(list_2d_to_table(list_2d2, header2))
